@@ -1,0 +1,42 @@
+import { CronJob } from "cron";
+import https from "https";
+
+const API_URL = process.env.API_URL!;
+
+const job = new CronJob("*/14 * * * *", () => {
+  https
+  .get(API_URL, (res) => {
+    if (res.statusCode == 200) {
+      console.log(
+        `Cron job executed successfully at ${new Date().toISOString()}`,
+      );
+    } else {
+      console.error(
+        `Cron job failed with status code: ${res.statusCode} at ${new Date().toISOString()}`,
+      );
+    }
+  })
+  .on("error", (err) => {
+    console.error(
+      `Error making GET request: ${err.message} at ${new Date().toISOString()}`,
+    );
+  });
+});
+
+export default job;
+
+// CRON JOB EXPLANATION:
+// Cron jobs are scheduled tasks that run periodically at fixed intervals
+// we want to send 1 GET request for every 14 minutes
+
+// How to define a "Schedule"?
+// You define a schedule using a cron expression, which consists of 5 fields representing:
+
+//! MINUTE, HOUR, DAY OF THE MONTH, MONTH, DAY OF THE WEEK
+
+//? EXAMPLES && EXPLANATION:
+//* 14 * * * * - Every 14 minutes
+//* 0 0 * * 0 - At midnight on every Sunday
+//* 30 3 15 * * - At 3:30 AM, on the 15th of every month
+//* 0 0 1 1 * - At midnight, on January 1st
+//* 0 * * * * - Every hour
