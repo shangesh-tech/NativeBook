@@ -5,25 +5,26 @@ const API_URL = process.env.API_URL!;
 
 const job = new CronJob("*/14 * * * *", () => {
   https
-  .get(API_URL, (res) => {
-    if (res.statusCode == 200) {
-      console.log(
-        `Cron job executed successfully at ${new Date().toISOString()}`,
-      );
-    } else {
+    .get(API_URL, (res) => {
+      if (res.statusCode == 200) {
+        console.log(
+          `Cron job executed successfully at ${new Date().toISOString()}`,
+        );
+      } else {
+        console.error(
+          `Cron job failed with status code: ${res.statusCode} at ${new Date().toISOString()}`,
+        );
+      }
+    })
+    .on("error", (err) => {
       console.error(
-        `Cron job failed with status code: ${res.statusCode} at ${new Date().toISOString()}`,
+        `Error making GET request: ${err.message} at ${new Date().toISOString()}`,
       );
-    }
-  })
-  .on("error", (err) => {
-    console.error(
-      `Error making GET request: ${err.message} at ${new Date().toISOString()}`,
-    );
-  });
+    });
 });
 
 export default job;
+// ...existing code...
 
 // CRON JOB EXPLANATION:
 // Cron jobs are scheduled tasks that run periodically at fixed intervals
