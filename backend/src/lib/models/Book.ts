@@ -3,7 +3,7 @@ import mongoose, { Schema, Document, Types } from "mongoose";
 export interface IBook extends Document {
   title: string;
   caption: string;
-  image: string; // Base64 string
+  image: string;
   rating: number;
   user: Types.ObjectId;
   createdAt: Date;
@@ -21,7 +21,7 @@ const bookSchema = new Schema<IBook>(
       required: true,
     },
     image: {
-      type: String, // Base64 image
+      type: String,
       required: true,
     },
     rating: {

@@ -24,7 +24,6 @@ const job = new CronJob("*/14 * * * *", () => {
 });
 
 export default job;
-// ...existing code...
 
 // CRON JOB EXPLANATION:
 // Cron jobs are scheduled tasks that run periodically at fixed intervals
