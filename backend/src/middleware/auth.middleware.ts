@@ -1,19 +1,9 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import User from "../lib/models/User";
 
-// const response = await fetch(`http://localhost:3000/api/books`, {
-//   method: "POST",
-//   body: JSON.stringify({
-//     title,
-//     caption
-//   }),
-//   headers: { Authorization: `Bearer ${token}` },
-// });
-
-
 const protectRoute = async (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ): Promise<Response | void> => {

@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, Response } from "express";
 import Book from "../lib/models/Book";
 import protectRoute from "../middleware/auth.middleware";
 
@@ -10,12 +10,16 @@ const router = Router();
 router.post(
   "/",
   protectRoute,
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: any, res: Response): Promise<Response> => {
     try {
       const { title, caption, rating, image } = req.body;
 
       if (!title || !caption || !rating || !image) {
         return res.status(400).json({ message: "Please provide all fields" });
+      }
+
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
       }
 
       const newBook = new Book({
@@ -39,11 +43,10 @@ router.post(
 /* ----------------------------------
    GET ALL BOOKS WITH PAGINATION
 ----------------------------------- */
-
 router.get(
   "/",
   protectRoute,
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: any, res: Response): Promise<Response> => {
     try {
       const page = Number(req.query.page) || 1;
       const limit = Number(req.query.limit) || 2;
@@ -76,8 +79,12 @@ router.get(
 router.get(
   "/user",
   protectRoute,
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: any, res: Response): Promise<Response> => {
     try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
       const books = await Book.find({ user: req.user._id }).sort({
         createdAt: -1,
       });
@@ -93,13 +100,16 @@ router.get(
 /* ----------------------------------
    UPDATE BOOK
 ----------------------------------- */
-
 router.put(
   "/:id",
   protectRoute,
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: any, res: Response): Promise<Response> => {
     try {
       const { title, caption, rating, image } = req.body;
+
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
 
       const book = await Book.findById(req.params.id);
 
@@ -133,8 +143,12 @@ router.put(
 router.delete(
   "/:id",
   protectRoute,
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: any, res: Response): Promise<Response> => {
     try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
       const book = await Book.findById(req.params.id);
 
       if (!book) {
