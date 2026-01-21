@@ -23,7 +23,11 @@ export default function Login() {
 
   const handleLogin = async () => {
     const result = await login(email, password);
-    if (!result.success) Alert.alert("Error", result.error);
+    if (!result.success) {
+      Alert.alert("Error", result.error);
+    } else {
+      Alert.alert("Success", "Logged in successfully!");
+    }
   };
 
   if (isCheckingAuth) return null;
@@ -37,7 +41,7 @@ export default function Login() {
         {/* HEADER */}
         <View style={styles.topIllustration}>
           <Text style={styles.logoText}>📚</Text>
-          <Text style={styles.appName}>BookWorm</Text>
+          <Text style={styles.appName}>NativeBook</Text>
           <Text style={styles.tagline}>Share your favorite reads</Text>
         </View>
 
@@ -107,6 +111,7 @@ export default function Login() {
                 <Text style={styles.buttonText}>Login</Text>
               )}
             </TouchableOpacity>
+              
 
             {/* FOOTER */}
             <View style={styles.footer}>
@@ -116,6 +121,18 @@ export default function Login() {
                   <Text style={styles.link}>Sign Up</Text>
                 </TouchableOpacity>
               </Link>
+            </View>
+
+            <View>
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: COLORS.textSecondary,
+                  marginTop: 10,
+                }}
+              >
+                Build with ❤️ by Shangesh S
+              </Text>
             </View>
           </View>
         </View>

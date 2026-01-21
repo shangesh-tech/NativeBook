@@ -43,7 +43,7 @@ export default function Signup() {
           <View style={styles.card}>
             {/* HEADER */}
             <View style={styles.header}>
-              <Text style={styles.title}>BookWorm🐛</Text>
+              <Text style={styles.title}>NativeBook 📚</Text>
               <Text style={styles.subtitle}>Share your favorite reads</Text>
             </View>
 
@@ -60,7 +60,7 @@ export default function Signup() {
                   />
                   <TextInput
                     style={styles.input}
-                    placeholder="johndoe"
+                    placeholder="Enter your username"
                     placeholderTextColor={COLORS.placeholderText}
                     value={username}
                     onChangeText={setUsername}
@@ -81,7 +81,7 @@ export default function Signup() {
                   />
                   <TextInput
                     style={styles.input}
-                    placeholder="johndoe@gmail.com"
+                    placeholder="Enter your email"
                     value={email}
                     placeholderTextColor={COLORS.placeholderText}
                     onChangeText={setEmail}
@@ -141,6 +141,17 @@ export default function Signup() {
                 <TouchableOpacity onPress={() => router.back()}>
                   <Text style={styles.link}>Login</Text>
                 </TouchableOpacity>
+              </View>
+              <View>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: COLORS.textSecondary,
+                    marginTop: 10,
+                  }}
+                >
+                  Build with ❤️ by Shangesh S
+                </Text>
               </View>
             </View>
           </View>
